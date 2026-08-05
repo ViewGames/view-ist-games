@@ -13,7 +13,7 @@
 :root{--bg:#faf7f2;--bg2:#ffffff;--bg3:#f0ece3;--bdr:#e0d8cc;--txt:#1e1a14;--txt2:#8a8278;--acc:#2563eb;--red:#dc2626;--grn:#16a34a;--shadow:0 2px 16px rgba(0,0,0,.08);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
-.hub-screen{display:none;flex-direction:column;align-items:center;min-height:100vh;}
+.hub-screen{display:none;flex-direction:column;align-items:center;min-height:100vh;position:relative;z-index:200;}
 .hub-screen.active{display:flex;}
 .wrap{width:100%;max-width:440px;padding:16px 14px 96px;display:flex;flex-direction:column;gap:14px;}/* 下部を広めに＝マイページ最下部(Legal等)がバナー広告に被って隠れないようスクロール余裕を確保 */
 .topbar{display:flex;justify-content:space-between;align-items:center;}
@@ -613,11 +613,11 @@ const WEB_ADSENSE_SLOT="3983767567";
 function initWebMode(){
   if(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())return;
   const style=document.createElement("style");
-  style.textContent=`body.web-ad-space{padding-bottom:60px;}#webAdBar{position:fixed;left:0;right:0;bottom:0;width:100%;min-height:50px;background:rgba(0,0,0,.04);z-index:100;display:flex;align-items:center;justify-content:center;pointer-events:none;}#webAdBar .adsbygoogle{pointer-events:auto;}`;
+  style.textContent=`body.web-ad-space{padding-bottom:60px;}#webAdBar{position:fixed;left:0;right:0;bottom:0;width:100%;height:50px;max-height:50px;overflow:hidden;background:rgba(0,0,0,.04);z-index:100;pointer-events:none;}#webAdBarInner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}#webAdBar .adsbygoogle{pointer-events:auto;}`;
   document.head.appendChild(style);
   document.body.classList.add("web-ad-space");
   const bar=document.createElement("div"); bar.id="webAdBar";
-  bar.innerHTML=`<ins class="adsbygoogle" style="display:block;width:100%;max-width:468px;height:50px" data-ad-client="${WEB_ADSENSE_CLIENT}" data-ad-slot="${WEB_ADSENSE_SLOT}" data-ad-format="horizontal" data-full-width-responsive="true"></ins>`;
+  bar.innerHTML=`<div id="webAdBarInner"><ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="${WEB_ADSENSE_CLIENT}" data-ad-slot="${WEB_ADSENSE_SLOT}"></ins></div>`;
   document.body.appendChild(bar);
   const s=document.createElement("script");
   s.async=true; s.crossOrigin="anonymous"; s.src=`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${WEB_ADSENSE_CLIENT}`;
