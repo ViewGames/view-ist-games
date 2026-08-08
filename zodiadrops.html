@@ -2229,7 +2229,7 @@ function openLegal(type){ // 五目と同じ導線（Privacy/Terms を外部ブ�
 document.getElementById('closeRankBtn').addEventListener('click',()=>document.getElementById('rankOverlay').classList.remove('active'));
 document.getElementById('settingsBtn').addEventListener('click',openSettings);
 document.getElementById('titleSettingsBtn').addEventListener('click',openSettings);
-document.getElementById('titleBackBtn').addEventListener('click',()=>{ if(history.length>1) history.back(); else window.location.href='index.html'; });
+document.getElementById('titleBackBtn').addEventListener('click',()=>{ exitGameFullscreen(); if(history.length>1) history.back(); else window.location.href='index.html'; });
 document.getElementById('closeSettingsBtn').addEventListener('click',()=>document.getElementById('settingsOverlay').classList.remove('active'));
 document.getElementById('purchaseBtn').addEventListener('click',()=>{
     localStorage.setItem(NO_ADS_KEY,'1');
@@ -2313,6 +2313,16 @@ async function hideNativeBanner(){
 const ADMOB_IDS={banner:'ca-app-pub-4228859164358449/8770632379',interstitial:'ca-app-pub-4228859164358449/4394227499',rewarded:'ca-app-pub-4228859164358449/8232144549'};
 const IS_NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 const ADMOB_TEST_MODE=false; // テスト中はtrue、リリース前にfalse
+
+// ── Web版フルスクリーン（CrazyGames風。ネイティブアプリでは無関係なので何もしない）──
+function requestGameFullscreen(){
+  if(IS_NATIVE) return;
+  try{ if(!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{}); }catch(e){}
+}
+function exitGameFullscreen(){
+  if(IS_NATIVE) return;
+  try{ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{}); }catch(e){}
+}
 const SJ_IAP_ITEMS='starjam_items'; // 消耗型・アイテムパック（Play Console Product ID=starjam_items[underscore]・購入オプションID=starjam-items・¥150/$1）
 let sjItemPrice=null;
 async function initAdMob(){
@@ -2419,10 +2429,10 @@ function boot(){
         init();
         // 冒険/オフラインのアイテム配布は廃止（入手は広告リワード＋アイテムパックIAPに集約）
     };
-    document.getElementById('scoreAtkBtn').addEventListener('click',()=>{ONL=null;sjDisguised=false;startGame(false);});
-    document.getElementById('modeHumanBtn').addEventListener('click',sjVsHuman);   // Step2：ランダムマッチ
-    document.getElementById('modeFriendBtn').addEventListener('click',sjVsFriend); // Step2：4桁フレンド
-    document.getElementById('modeAiBtn').addEventListener('click',()=>{ONL=null;sjDisguised=false;startGame(true);});
+    document.getElementById('scoreAtkBtn').addEventListener('click',()=>{requestGameFullscreen();ONL=null;sjDisguised=false;startGame(false);});
+    document.getElementById('modeHumanBtn').addEventListener('click',()=>{requestGameFullscreen();sjVsHuman();});   // Step2：ランダムマッチ
+    document.getElementById('modeFriendBtn').addEventListener('click',()=>{requestGameFullscreen();sjVsFriend();}); // Step2：4桁フレンド
+    document.getElementById('modeAiBtn').addEventListener('click',()=>{requestGameFullscreen();ONL=null;sjDisguised=false;startGame(true);});
     document.getElementById('howtoBtn').addEventListener('click',()=>{applyI18n();buildHowto();document.getElementById('howtoOverlay').classList.add('active');});
     document.getElementById('closeHowtoBtn').addEventListener('click',()=>document.getElementById('howtoOverlay').classList.remove('active'));
 }

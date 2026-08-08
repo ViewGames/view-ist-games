@@ -678,7 +678,7 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
 <!-- ??? TITLE ??? -->
 <div id="screen-title" class="screen active">
   <div class="title-topbar">
-    <button class="icon-btn" onclick="window.location.href='index.html'" title="Hub" style="font-size:.95rem;font-weight:700;letter-spacing:-.02em;">&#8592;</button>
+    <button class="icon-btn" onclick="exitGameFullscreen();window.location.href='index.html'" title="Hub" style="font-size:.95rem;font-weight:700;letter-spacing:-.02em;">&#8592;</button>
     <div style="display:flex;gap:6px;align-items:center;">
       <button class="icon-btn" id="btn-login-event" onclick="openLoginEvent()" title="7日ログイン" style="display:none;">🎁</button>
       <button class="icon-btn" onclick="openAchievements()" title="実績">🏆</button>
@@ -816,7 +816,7 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
   <div class="pts-badge">⭐ <span class="pts-num" id="t-pts">0</span> <span id="t-pts-lbl">pts</span></div>
 
   <div class="mode-btns">
-    <button class="mode-btn" onclick="openMatchingModal()">
+    <button class="mode-btn" onclick="requestGameFullscreen();openMatchingModal()">
       <span class="mode-icon">🌐</span>
       <span class="mode-text">
         <span id="t-vshuman">vs Human</span>
@@ -824,7 +824,7 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
       </span>
       <span style="margin-left:auto;font-size:.72rem;color:#2563eb;font-weight:bold;background:#eff6ff;padding:3px 8px;border-radius:20px;border:1px solid #bfdbfe;white-space:nowrap;">+125 pts</span>
     </button>
-    <button class="mode-btn" onclick="openFriendModal()">
+    <button class="mode-btn" onclick="requestGameFullscreen();openFriendModal()">
       <span class="mode-icon">👥</span>
       <span class="mode-text">
         <span id="t-vsfriend">vs Friend</span>
@@ -832,7 +832,7 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
       </span>
       <span style="margin-left:auto;font-size:.72rem;color:#2563eb;font-weight:bold;background:#eff6ff;padding:3px 8px;border-radius:20px;border:1px solid #bfdbfe;white-space:nowrap;">+75 pts</span>
     </button>
-    <button class="mode-btn" onclick="openAIDiffModal()">
+    <button class="mode-btn" onclick="requestGameFullscreen();openAIDiffModal()">
       <span class="mode-icon">🤖</span>
       <span class="mode-text">
         <span id="t-vsai">vs AI</span>
@@ -3293,6 +3293,16 @@ const ADMOB_IDS = {
 };
 const IS_NATIVE = !!(window.Capacitor?.isNativePlatform?.());
 const ADMOB_TEST_MODE = false; // テスト中はtrue、リリース前にfalseに変更
+
+// ── Web版フルスクリーン（CrazyGames風。ネイティブアプリでは無関係なので何もしない）──
+function requestGameFullscreen(){
+  if(IS_NATIVE) return;
+  try{ if(!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{}); }catch(e){}
+}
+function exitGameFullscreen(){
+  if(IS_NATIVE) return;
+  try{ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{}); }catch(e){}
+}
 
 // ???????????????????????????????????????????????????????
 // IAP (In-App Purchase) ? cordova-plugin-purchase v13
