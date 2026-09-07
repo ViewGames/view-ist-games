@@ -166,8 +166,8 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
           align-self: flex-start; margin-top: 0; }
 .grid {
   display: grid;
-  grid-template-columns: 16px repeat(10, var(--cell));
-  grid-template-rows:    16px repeat(10, var(--cell));
+  grid-template-columns: 16px repeat(8, var(--cell));
+  grid-template-rows:    16px repeat(8, var(--cell));
   gap: 1px; background: #c8c0b0; border: 2px solid var(--bdr);
   border-radius: 6px; padding: 1px; box-shadow: var(--shadow);
 }
@@ -492,8 +492,8 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
 .own-col { display: flex; flex-direction: column; gap: 2px; flex: 0 0 auto; }
 #screen-game .own-sm { --cell: 14px; }
 #screen-setup .grid { --cell: 28px; }
-#atk-grid { --cell: 28px; }
-@media (max-width: 350px) { #screen-setup .grid, #atk-grid { --cell: 24px; } }
+#atk-grid { --cell: 35px; }
+@media (max-width: 350px) { #screen-setup .grid { --cell: 24px; } #atk-grid { --cell: 30px; } }
 .stone-p::after { content:''; display:block; width:72%; height:72%; border-radius:50%; background:radial-gradient(circle at 35% 35%, #555, #111); margin:auto; margin-top:14%; }
 .stone-a::after { content:''; display:block; width:72%; height:72%; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff, #ccc); border:1px solid #aaa; margin:auto; margin-top:14%; }
 .bomb-panel {
@@ -699,8 +699,8 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
       <stop offset="100%" stop-color="#0f0a04"/>
     </linearGradient>
     <linearGradient id="hwd" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d4a84b"/>
-      <stop offset="100%" stop-color="#b0782a"/>
+      <stop offset="0%" stop-color="#2f8a4a"/>
+      <stop offset="100%" stop-color="#1f6034"/>
     </linearGradient>
     <radialGradient id="hsb" cx="35%" cy="30%">
       <stop offset="0%" stop-color="#666"/>
@@ -724,66 +724,50 @@ body.lang-hi .title-name { font-family: 'Noto Sans Devanagari', sans-serif; font
 
   <!-- Board (right side) -->
   <rect x="174" y="8" width="180" height="144" rx="6" fill="url(#hwd)"/>
-  <rect x="174" y="8" width="180" height="144" rx="6" fill="none" stroke="#7a5010" stroke-width="1.5"/>
+  <rect x="174" y="8" width="180" height="144" rx="6" fill="none" stroke="#123420" stroke-width="1.5"/>
 
-  <!-- Grid lines ? 10 cols × 8 rows, cell=18px, origin=(184,18) -->
-  <line x1="184" y1="18" x2="184" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="202" y1="18" x2="202" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="220" y1="18" x2="220" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="238" y1="18" x2="238" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="256" y1="18" x2="256" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="274" y1="18" x2="274" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="292" y1="18" x2="292" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="310" y1="18" x2="310" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="328" y1="18" x2="328" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="346" y1="18" x2="346" y2="144" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="18"  x2="346" y2="18"  stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="36"  x2="346" y2="36"  stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="54"  x2="346" y2="54"  stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="72"  x2="346" y2="72"  stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="90"  x2="346" y2="90"  stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="108" x2="346" y2="108" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="126" x2="346" y2="126" stroke="#8b6014" stroke-width="0.7"/>
-  <line x1="184" y1="144" x2="346" y2="144" stroke="#8b6014" stroke-width="0.7"/>
+  <!-- Grid lines: 8 cols × 8 rows (Reversi board), origin=(184,18) -->
+  <line x1="184" y1="18" x2="184" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="204" y1="18" x2="204" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="224" y1="18" x2="224" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="244" y1="18" x2="244" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="264" y1="18" x2="264" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="284" y1="18" x2="284" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="304" y1="18" x2="304" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="324" y1="18" x2="324" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="344" y1="18" x2="344" y2="144" stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="18"  x2="344" y2="18"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="34"  x2="344" y2="34"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="50"  x2="344" y2="50"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="66"  x2="344" y2="66"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="82"  x2="344" y2="82"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="98"  x2="344" y2="98"  stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="114" x2="344" y2="114" stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="130" x2="344" y2="130" stroke="#164023" stroke-width="0.7"/>
+  <line x1="184" y1="144" x2="344" y2="144" stroke="#164023" stroke-width="0.7"/>
 
-  <!-- Winning 5-in-a-row glow line (diagonal: 220,18 → 292,90) -->
-  <line x1="220" y1="18" x2="292" y2="90" stroke="#fbbf24" stroke-width="20" stroke-linecap="round" opacity="0.28" style="animation:hglow 2.2s ease-in-out infinite"/>
+  <!-- Flip glow (a stone that just got flipped) -->
+  <circle cx="264" cy="66" r="12" fill="#fbbf24" opacity="0.5" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite"/>
 
   <!-- White stones -->
-  <circle cx="202" cy="36"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="256" cy="36"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="238" cy="54"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="274" cy="54"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="202" cy="72"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="220" cy="72"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="184" cy="54"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="310" cy="36"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="184" cy="90"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="238" cy="90"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="310" cy="72"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
-  <circle cx="328" cy="90"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="204" cy="34"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="244" cy="34"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="224" cy="50"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="264" cy="50"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="204" cy="82"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="304" cy="50"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="324" cy="82"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
+  <circle cx="244" cy="98"  r="7.5" fill="url(#hsw)" stroke="#aaa" stroke-width="0.5" filter="url(#hshad)"/>
 
-  <!-- Other black stones -->
-  <circle cx="184" cy="18"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="202" cy="18"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="310" cy="18"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="202" cy="90"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="220" cy="108" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="256" cy="108" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="310" cy="108" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="346" cy="72"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-
-  <!-- Winning 5-in-a-row black stones (diagonal) with gold glow -->
-  <circle cx="220" cy="18" r="10" fill="#fbbf24" opacity="0.6" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite"/>
-  <circle cx="238" cy="36" r="10" fill="#fbbf24" opacity="0.6" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite .3s"/>
-  <circle cx="256" cy="54" r="10" fill="#fbbf24" opacity="0.6" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite .6s"/>
-  <circle cx="274" cy="72" r="10" fill="#fbbf24" opacity="0.6" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite .9s"/>
-  <circle cx="292" cy="90" r="10" fill="#fbbf24" opacity="0.6" filter="url(#hgf)" style="animation:hglow 2.2s ease-in-out infinite 1.2s"/>
-  <circle cx="220" cy="18" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="238" cy="36" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="256" cy="54" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="274" cy="72" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
-  <circle cx="292" cy="90" r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <!-- Black stones -->
+  <circle cx="224" cy="34"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="284" cy="34"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="244" cy="50"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="284" cy="50"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="264" cy="66"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="204" cy="66"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="224" cy="82"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
+  <circle cx="304" cy="98"  r="7.5" fill="url(#hsb)" filter="url(#hshad)"/>
 
   <!-- Left side floating stones -->
   <g style="animation:hfloat 3.5s ease-in-out infinite">
