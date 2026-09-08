@@ -32,6 +32,7 @@ body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(
 .game-card.airplane .game-card-foot{background:linear-gradient(90deg,#1e3a5f,#2563eb);color:#fff;}
 .game-card.gomoku .game-card-foot{background:linear-gradient(90deg,#3d2b1f,#8b5e2b);color:#fff;}
 .game-card.starjam .game-card-foot{background:linear-gradient(90deg,#1d4e6a,#6b3fb0);color:#fff;}
+.game-card.reversi .game-card-foot{background:linear-gradient(90deg,#123420,#2f8a4a);color:#fff;}
 .card-info .card-title{font-size:.95rem;font-weight:900;line-height:1.2;}
 .card-info .card-sub{font-size:.72rem;opacity:.72;margin-top:3px;}
 .card-arrow{font-size:1.2rem;opacity:.6;margin-top:auto;align-self:flex-end;}
@@ -403,6 +404,37 @@ body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(
           <div class="card-arrow">&#8250;</div>
         </div>
       </div>
+      <div class="game-card reversi" onclick="goGame('reversi-game.html')">
+        <div class="game-card-hero"><svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="rvbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f8a4a"/><stop offset="1" stop-color="#123420"/></linearGradient>
+            <radialGradient id="rvsb" cx="35%" cy="30%"><stop offset="0" stop-color="#555"/><stop offset="1" stop-color="#111"/></radialGradient>
+            <radialGradient id="rvsw" cx="35%" cy="30%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ccc"/></radialGradient>
+          </defs>
+          <rect width="360" height="160" fill="url(#rvbg)"/>
+          <line x1="60" y1="0" x2="60" y2="160" stroke="#0d2617" stroke-width="1"/>
+          <line x1="120" y1="0" x2="120" y2="160" stroke="#0d2617" stroke-width="1"/>
+          <line x1="180" y1="0" x2="180" y2="160" stroke="#0d2617" stroke-width="1"/>
+          <line x1="240" y1="0" x2="240" y2="160" stroke="#0d2617" stroke-width="1"/>
+          <line x1="300" y1="0" x2="300" y2="160" stroke="#0d2617" stroke-width="1"/>
+          <line x1="0" y1="40" x2="360" y2="40" stroke="#0d2617" stroke-width="1"/>
+          <line x1="0" y1="80" x2="360" y2="80" stroke="#0d2617" stroke-width="1"/>
+          <line x1="0" y1="120" x2="360" y2="120" stroke="#0d2617" stroke-width="1"/>
+          <circle cx="150" cy="60" r="22" fill="url(#rvsw)" stroke="#aaa" stroke-width="1"/>
+          <circle cx="210" cy="60" r="22" fill="url(#rvsb)"/>
+          <circle cx="150" cy="100" r="22" fill="url(#rvsb)"/>
+          <circle cx="210" cy="100" r="22" fill="url(#rvsw)" stroke="#aaa" stroke-width="1"/>
+          <circle cx="90" cy="60" r="17" fill="url(#rvsb)" opacity="0.9"/>
+          <circle cx="270" cy="100" r="17" fill="url(#rvsw)" stroke="#aaa" stroke-width="1" opacity="0.9"/>
+        </svg></div>
+        <div class="game-card-foot">
+          <div class="card-info">
+            <div class="card-title" id="t-game4-title">&#12458;&#12475;&#12525;</div>
+            <div class="card-sub" id="t-game4-sub">Reversi</div>
+          </div>
+          <div class="card-arrow">&#8250;</div>
+        </div>
+      </div>
       <div class="game-card-new">
         <span style="font-size:1.2rem;color:var(--bdr);">&#43;</span>
         <span style="font-size:.85rem;font-weight:700;color:var(--txt2);letter-spacing:.04em;">NEW GAME COMING SOON</span>
@@ -456,7 +488,7 @@ body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(
         </div>
       </div>
       <div class="invite-code-msg" id="invite-code-msg"></div>
-      <div>
+      <div id="invite-progress-section">
         <div style="font-size:.78rem;color:#374151;margin-bottom:6px;" id="t-invite-progress">5 invites = No between-game ads</div>
         <div class="invite-progress-wrap">
           <div class="invite-progress-track"><div class="invite-progress-fill" id="invite-progress-bar"></div></div>
@@ -503,24 +535,27 @@ body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(
 <div class="toast" id="toast"></div>
 <script>
 const T={
-  ja:{hub_title:"\u{1F3AE} ゲーム一覧",game1_title:"飛行機ゲーム",game1_sub:"Jet Head Strike",game2_title:"五目並べ",game2_sub:"Gomoku",game3_title:"Star Jam",game3_sub:"惑星マージ",login_title:"\u{1F4C5} 7日ログインボーナス",login_claim:"\u{1F4A3} 受け取る",login_claimed_today:"✅ 本日受取済",login_all_claimed:"受取完了",login_claim_done:"✅ 受け取りました！",profile_title:"マイページ",bomb_lbl:"個の爆弾",lbl_lang:"\u{1F30D} 言語",invite_title:"\u{1F465} 友達招待",your_code:"あなたの招待コード",invite_reward:"\u{1F381} 友達と一緒にオンライン対戦しよう！",share_btn:"\u{1F4AC} シェア",name_saved:"✓ 保存しました",share_msg:"一緒に遊ぼう！ \u{1F3AE}\n招待コード: $c",share_dl:"ダウンロード:",update_downloaded:"✅ 更新をダウンロードしました。次回起動時に適用されます"},
-  en:{hub_title:"\u{1F3AE} Games",game1_title:"Airplane Battle",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Five in a Row",game3_title:"Star Jam",game3_sub:"Merge the Planets",login_title:"\u{1F4C5} 7-Day Login Bonus",login_claim:"\u{1F4A3} Claim",login_claimed_today:"✅ Already claimed today",login_all_claimed:"All claimed!",login_claim_done:"✅ Claimed!",profile_title:"My Page",bomb_lbl:"bombs",lbl_lang:"\u{1F30D} LANGUAGE",invite_title:"\u{1F465} INVITE FRIENDS",your_code:"Your Invite Code",invite_reward:"\u{1F381} Invite friends to play together online!",share_btn:"\u{1F4AC} Share",name_saved:"✓ Saved",share_msg:"Let us play together! \u{1F3AE}\nMy invite code: $c",share_dl:"Download:",update_downloaded:"✅ Update downloaded. It will apply next time you open the app."},
-  es:{hub_title:"\u{1F3AE} Juegos",game1_title:"Batalla Aérea",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Cinco en Raya",game3_title:"Star Jam",game3_sub:"Fusiona planetas",login_title:"\u{1F4C5} Bono 7 días",login_claim:"\u{1F4A3} Reclamar",login_claimed_today:"✅ Ya reclamado hoy",login_all_claimed:"¡Todo reclamado!",login_claim_done:"✅ ¡Recibido!",profile_title:"Mi Perfil",bomb_lbl:"bombas",lbl_lang:"\u{1F30D} IDIOMA",invite_title:"\u{1F465} INVITAR AMIGOS",your_code:"Tu Código de Invitación",invite_reward:"\u{1F381} ¡Invita amigos a jugar en línea!",share_btn:"\u{1F4AC} Compartir",name_saved:"✓ Guardado",share_msg:"¡Juguemos juntos! \u{1F3AE}\nMi código de invitación: $c",share_dl:"Descargar:",update_downloaded:"✅ Actualización descargada. Se aplicará al abrir la app de nuevo."},
-  zh:{hub_title:"\u{1F3AE} 游戏",game1_title:"飞机大战",game1_sub:"Jet Head Strike",game2_title:"五子棋",game2_sub:"Gomoku",game3_title:"Star Jam",game3_sub:"行星合成",login_title:"\u{1F4C5} 7天登录奖励",login_claim:"\u{1F4A3} 领取",login_claimed_today:"✅ 今日已领取",login_all_claimed:"全部领完",login_claim_done:"✅ 已领取！",profile_title:"我的主页",bomb_lbl:"个炸弹",lbl_lang:"\u{1F30D} 语言",invite_title:"\u{1F465} 邀请好友",your_code:"你的邀请码",invite_reward:"\u{1F381} 邀请好友一起在线游戏！",share_btn:"\u{1F4AC} 分享",name_saved:"✓ 已保存",share_msg:"一起来玩吧！ \u{1F3AE}\n我的邀请码: $c",share_dl:"下载:",update_downloaded:"✅ 更新已下载，下次打开应用时生效。"},
-  fr:{hub_title:"\u{1F3AE} Jeux",game1_title:"Bataille Aérienne",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Cinq d'affilée",game3_title:"Star Jam",game3_sub:"Fusion de planètes",login_title:"\u{1F4C5} Bonus 7 jours",login_claim:"\u{1F4A3} Récupérer",login_claimed_today:"✅ Déjà récupéré",login_all_claimed:"Tout récupéré",login_claim_done:"✅ Récupéré !",profile_title:"Mon Profil",bomb_lbl:"bombes",lbl_lang:"\u{1F30D} LANGUE",invite_title:"\u{1F465} INVITER DES AMIS",your_code:"Votre Code d'invitation",invite_reward:"\u{1F381} Invitez des amis à jouer en ligne !",share_btn:"\u{1F4AC} Partager",name_saved:"✓ Enregistré",share_msg:"Jouons ensemble ! \u{1F3AE}\nMon code d'invitation : $c",share_dl:"Télécharger :",update_downloaded:"✅ Mise à jour téléchargée. Appliquée au prochain lancement."},
-  hi:{hub_title:"\u{1F3AE} गेम्स",game1_title:"हवाई युद्ध",game1_sub:"Jet Head Strike",game2_title:"गोमोकू",game2_sub:"पाँच कतार में",game3_title:"Star Jam",game3_sub:"ग्रह विलय",login_title:"\u{1F4C5} 7 दिन बोनस",login_claim:"\u{1F4A3} प्राप्त करें",login_claimed_today:"✅ आज मिल चुका है",login_all_claimed:"सब मिल गया",login_claim_done:"✅ मिल गया!",profile_title:"मेरा प्रोफ़ाइल",bomb_lbl:"बम",lbl_lang:"\u{1F30D} भाषा",invite_title:"\u{1F465} दोस्त बुलाएं",your_code:"आपका आमंत्रण कोड",invite_reward:"\u{1F381} दोस्तों को ऑनलाइन खेलने के लिए बुलाएं!",share_btn:"\u{1F4AC} साझा करें",name_saved:"✓ सहेजा गया",share_msg:"आओ साथ खेलें! \u{1F3AE}\nमेरा आमंत्रण कोड: $c",share_dl:"डाउनलोड:",update_downloaded:"✅ अपडेट डाउनलोड हुआ। अगली बार ऐप खोलने पर लागू होगा।"},
+  ja:{hub_title:"\u{1F3AE} ゲーム一覧",game1_title:"飛行機ゲーム",game1_sub:"Jet Head Strike",game2_title:"五目並べ",game2_sub:"Gomoku",game3_title:"Star Jam",game3_sub:"惑星マージ",game4_title:"オセロ",game4_sub:"Reversi",login_title:"\u{1F4C5} 7日ログインボーナス",login_claim:"\u{1F4A3} 受け取る",login_claimed_today:"✅ 本日受取済",login_all_claimed:"受取完了",login_claim_done:"✅ 受け取りました！",profile_title:"マイページ",bomb_lbl:"個の爆弾",lbl_lang:"\u{1F30D} 言語",invite_title:"\u{1F465} 友達招待",your_code:"あなたの招待コード",invite_reward:"\u{1F381} 友達と一緒にオンライン対戦しよう！",share_btn:"\u{1F4AC} シェア",name_saved:"✓ 保存しました",share_msg:"一緒に遊ぼう！ \u{1F3AE}\n招待コード: $c",share_dl:"ダウンロード:",update_downloaded:"✅ 更新をダウンロードしました。次回起動時に適用されます"},
+  en:{hub_title:"\u{1F3AE} Games",game1_title:"Airplane Battle",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Five in a Row",game3_title:"Star Jam",game3_sub:"Merge the Planets",game4_title:"Reversi",game4_sub:"Flip the Board",login_title:"\u{1F4C5} 7-Day Login Bonus",login_claim:"\u{1F4A3} Claim",login_claimed_today:"✅ Already claimed today",login_all_claimed:"All claimed!",login_claim_done:"✅ Claimed!",profile_title:"My Page",bomb_lbl:"bombs",lbl_lang:"\u{1F30D} LANGUAGE",invite_title:"\u{1F465} INVITE FRIENDS",your_code:"Your Invite Code",invite_reward:"\u{1F381} Invite friends to play together online!",share_btn:"\u{1F4AC} Share",name_saved:"✓ Saved",share_msg:"Let us play together! \u{1F3AE}\nMy invite code: $c",share_dl:"Download:",update_downloaded:"✅ Update downloaded. It will apply next time you open the app."},
+  es:{hub_title:"\u{1F3AE} Juegos",game1_title:"Batalla Aérea",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Cinco en Raya",game3_title:"Star Jam",game3_sub:"Fusiona planetas",game4_title:"Reversi",game4_sub:"Voltea el Tablero",login_title:"\u{1F4C5} Bono 7 días",login_claim:"\u{1F4A3} Reclamar",login_claimed_today:"✅ Ya reclamado hoy",login_all_claimed:"¡Todo reclamado!",login_claim_done:"✅ ¡Recibido!",profile_title:"Mi Perfil",bomb_lbl:"bombas",lbl_lang:"\u{1F30D} IDIOMA",invite_title:"\u{1F465} INVITAR AMIGOS",your_code:"Tu Código de Invitación",invite_reward:"\u{1F381} ¡Invita amigos a jugar en línea!",share_btn:"\u{1F4AC} Compartir",name_saved:"✓ Guardado",share_msg:"¡Juguemos juntos! \u{1F3AE}\nMi código de invitación: $c",share_dl:"Descargar:",update_downloaded:"✅ Actualización descargada. Se aplicará al abrir la app de nuevo."},
+  zh:{hub_title:"\u{1F3AE} 游戏",game1_title:"飞机大战",game1_sub:"Jet Head Strike",game2_title:"五子棋",game2_sub:"Gomoku",game3_title:"Star Jam",game3_sub:"行星合成",game4_title:"黑白棋",game4_sub:"翻转棋盘",login_title:"\u{1F4C5} 7天登录奖励",login_claim:"\u{1F4A3} 领取",login_claimed_today:"✅ 今日已领取",login_all_claimed:"全部领完",login_claim_done:"✅ 已领取！",profile_title:"我的主页",bomb_lbl:"个炸弹",lbl_lang:"\u{1F30D} 语言",invite_title:"\u{1F465} 邀请好友",your_code:"你的邀请码",invite_reward:"\u{1F381} 邀请好友一起在线游戏！",share_btn:"\u{1F4AC} 分享",name_saved:"✓ 已保存",share_msg:"一起来玩吧！ \u{1F3AE}\n我的邀请码: $c",share_dl:"下载:",update_downloaded:"✅ 更新已下载，下次打开应用时生效。"},
+  fr:{hub_title:"\u{1F3AE} Jeux",game1_title:"Bataille Aérienne",game1_sub:"Jet Head Strike",game2_title:"Gomoku",game2_sub:"Cinq d'affilée",game3_title:"Star Jam",game3_sub:"Fusion de planètes",game4_title:"Othello",game4_sub:"Retournez le Plateau",login_title:"\u{1F4C5} Bonus 7 jours",login_claim:"\u{1F4A3} Récupérer",login_claimed_today:"✅ Déjà récupéré",login_all_claimed:"Tout récupéré",login_claim_done:"✅ Récupéré !",profile_title:"Mon Profil",bomb_lbl:"bombes",lbl_lang:"\u{1F30D} LANGUE",invite_title:"\u{1F465} INVITER DES AMIS",your_code:"Votre Code d'invitation",invite_reward:"\u{1F381} Invitez des amis à jouer en ligne !",share_btn:"\u{1F4AC} Partager",name_saved:"✓ Enregistré",share_msg:"Jouons ensemble ! \u{1F3AE}\nMon code d'invitation : $c",share_dl:"Télécharger :",update_downloaded:"✅ Mise à jour téléchargée. Appliquée au prochain lancement."},
+  hi:{hub_title:"\u{1F3AE} गेम्स",game1_title:"हवाई युद्ध",game1_sub:"Jet Head Strike",game2_title:"गोमोकू",game2_sub:"पाँच कतार में",game3_title:"Star Jam",game3_sub:"ग्रह विलय",game4_title:"रिवर्सी",game4_sub:"बोर्ड पलटें",login_title:"\u{1F4C5} 7 दिन बोनस",login_claim:"\u{1F4A3} प्राप्त करें",login_claimed_today:"✅ आज मिल चुका है",login_all_claimed:"सब मिल गया",login_claim_done:"✅ मिल गया!",profile_title:"मेरा प्रोफ़ाइल",bomb_lbl:"बम",lbl_lang:"\u{1F30D} भाषा",invite_title:"\u{1F465} दोस्त बुलाएं",your_code:"आपका आमंत्रण कोड",invite_reward:"\u{1F381} दोस्तों को ऑनलाइन खेलने के लिए बुलाएं!",share_btn:"\u{1F4AC} साझा करें",name_saved:"✓ सहेजा गया",share_msg:"आओ साथ खेलें! \u{1F3AE}\nमेरा आमंत्रण कोड: $c",share_dl:"डाउनलोड:",update_downloaded:"✅ अपडेट डाउनलोड हुआ। अगली बार ऐप खोलने पर लागू होगा।"},
 };
 const LANGS=["en","hi","es","fr","zh","ja"];
 const LANG_META={ja:{flag:"\u{1F1EF}\u{1F1F5}",label:"日本語"},en:{flag:"\u{1F1FA}\u{1F1F8}",label:"English"},es:{flag:"\u{1F1EA}\u{1F1F8}",label:"Español"},zh:{flag:"\u{1F1E8}\u{1F1F3}",label:"中文"},fr:{flag:"\u{1F1EB}\u{1F1F7}",label:"Français"},hi:{flag:"\u{1F1EE}\u{1F1F3}",label:"हिंदी"}};
 let LANG="en";
 function t(k){return(T[LANG]&&T[LANG][k])||(T.en[k])||k;}
 function detectLang(){const nav=(navigator.language||"en").toLowerCase();if(nav.startsWith("ja"))return"ja";if(nav.startsWith("zh"))return"zh";if(nav.startsWith("es"))return"es";if(nav.startsWith("fr"))return"fr";if(nav.startsWith("hi"))return"hi";return"en";}
-function applyI18n(){const set=(id,k)=>{const el=document.getElementById(id);if(el)el.textContent=t(k);};set("t-hub-title","hub_title");set("t-game1-title","game1_title");set("t-game1-sub","game1_sub");set("t-game2-title","game2_title");set("t-game2-sub","game2_sub");set("t-game3-title","game3_title");set("t-game3-sub","game3_sub");set("t-login-title","login_title");set("t-profile-title","profile_title");set("t-bomb-lbl","bomb_lbl");set("t-lbl-lang","lbl_lang");set("t-invite-title","invite_title");set("t-your-code","your_code");set("t-invite-reward","invite_reward");set("t-share-btn","share_btn");
-  /* 招待特典＝5人でゲーム間広告なし（言語別。T未定義だった t-invite-progress を翻訳） */
+function applyI18n(){const set=(id,k)=>{const el=document.getElementById(id);if(el)el.textContent=t(k);};set("t-hub-title","hub_title");set("t-game1-title","game1_title");set("t-game1-sub","game1_sub");set("t-game2-title","game2_title");set("t-game2-sub","game2_sub");set("t-game3-title","game3_title");set("t-game3-sub","game3_sub");set("t-game4-title","game4_title");set("t-game4-sub","game4_sub");set("t-login-title","login_title");set("t-profile-title","profile_title");set("t-bomb-lbl","bomb_lbl");set("t-lbl-lang","lbl_lang");set("t-invite-title","invite_title");set("t-your-code","your_code");set("t-invite-reward","invite_reward");set("t-share-btn","share_btn");
+  /* 招待特典＝5人でゲーム間広告なし（言語別。T未定義だった t-invite-progress を翻訳）。Web版は広告なし特典が効かないため文言を変え、進捗バーは非表示 */
   const irT={ja:"\u{1F381} 5人招待でゲーム間広告が永久になし！",en:"\u{1F381} Invite 5 friends → No between-game ads forever!",es:"\u{1F381} Invita a 5 amigos → ¡Sin anuncios entre partidas!",zh:"\u{1F381} 邀请5位好友 → 永久无局间广告！",fr:"\u{1F381} Invitez 5 amis → Plus de pub entre parties !",hi:"\u{1F381} 5 दोस्तों को बुलाएं → बीच के विज्ञापन हमेशा के लिए बंद!"};
   const ipT={ja:"5人招待でゲーム間広告なし",en:"5 invites = No between-game ads",es:"5 invitados = Sin anuncios",zh:"邀请5人 = 无局间广告",fr:"5 invités = Pas de pub entre parties",hi:"5 आमंत्रण = बीच के विज्ञापन बंद"};
-  const e1=document.getElementById("t-invite-reward");if(e1)e1.textContent=irT[LANG]||irT.en;
-  const e2=document.getElementById("t-invite-progress");if(e2)e2.textContent=ipT[LANG]||ipT.en;}
+  const irWebT={ja:"\u{1F381} 招待してアイテムをもらおう！",en:"\u{1F381} Invite friends → Get items!",es:"\u{1F381} ¡Invita amigos y consigue objetos!",zh:"\u{1F381} 邀请好友，获得道具！",fr:"\u{1F381} Invitez des amis → Recevez des objets !",hi:"\u{1F381} दोस्तों को बुलाएं → आइटम पाएं!"};
+  const isNativeApp=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+  const e1=document.getElementById("t-invite-reward");if(e1)e1.textContent=isNativeApp?(irT[LANG]||irT.en):(irWebT[LANG]||irWebT.en);
+  const e2=document.getElementById("t-invite-progress");if(e2)e2.textContent=ipT[LANG]||ipT.en;
+  const e3=document.getElementById("invite-progress-section");if(e3)e3.style.display=isNativeApp?"":"none";}
 const SP_KEY="shared_profile";const LOGIN_BOMBS=[1,1,2,2,3,3,5];const INVITE_GOAL=5;/* 5人招待でゲーム間広告なし。全ゲームが shared_profile.adFree を読む */
 function defaultSP(){return{name:"Player",inviteCode:"",bombs:0,lang:detectLang(),loginEvent:null,musicOn:true,sfxOn:true,invitedCount:0,invitedBy:null,lastInviteCheck:0};}
 let SP=defaultSP();
